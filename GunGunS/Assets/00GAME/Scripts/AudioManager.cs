@@ -15,7 +15,6 @@ public class AudioManager : Singleton<AudioManager>
 
     [SerializeField] public AudioClip BGMusicClip;
     [SerializeField] public AudioClip[] UIClips;
-    [SerializeField] public AudioClip GunShotClip;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +24,15 @@ public class AudioManager : Singleton<AudioManager>
         sfxs.Add(sfx3);
         sfxs.Add(sfx4);
 
-        ChangeVolume(true);
+        if(PlayerPrefs.GetInt(CONSTANTS.SOUND_MUSIC, 1) != 0)
+            ChangeVolumeMusic(true);
+        else
+            ChangeVolumeMusic(false);
+
+        if (PlayerPrefs.GetInt(CONSTANTS.SOUND_SFX, 1) != 0)
+            ChangeVolumeSFX(true);
+        else
+            ChangeVolumeSFX(false);
     }
 
     // Update is called once per frame
@@ -70,11 +77,21 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
-    public void ChangeVolume(bool turnOn)
+    public void ChangeVolumeMusic(bool turnOn)
     {
         if (!turnOn)
         {
             musicAudio.volume = 0;
+        }
+        else
+        {
+            musicAudio.volume = 0.3f;
+        }
+    }
+    public void ChangeVolumeSFX(bool turnOn)
+    {
+        if (!turnOn)
+        {
             sfx1.volume = 0;
             sfx2.volume = 0;
             sfx3.volume = 0;
@@ -82,7 +99,6 @@ public class AudioManager : Singleton<AudioManager>
         }
         else
         {
-            musicAudio.volume = 0.5f;
             sfx1.volume = 0.5f;
             sfx2.volume = 0.5f;
             sfx3.volume = 0.5f;

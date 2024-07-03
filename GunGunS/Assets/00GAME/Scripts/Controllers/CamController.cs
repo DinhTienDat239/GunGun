@@ -6,6 +6,7 @@ public class CamController : MonoBehaviour
 {
     [SerializeField] Transform _player;
     [SerializeField] Camera _camera;
+    
 
     Vector3 _offset;
 
@@ -20,6 +21,7 @@ public class CamController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         _camera.transform.position = new Vector3(_camera.transform.position.x, _player.position.y - _offset.y, _camera.transform.position.z);
+        if (PlayerController.instance.isFollow)
+            _camera.transform.position = new Vector3(_camera.transform.position.x, _player.position.y - _offset.y, _camera.transform.position.z);
     }
 }

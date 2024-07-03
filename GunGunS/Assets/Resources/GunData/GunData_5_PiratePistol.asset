@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gunID: G5
   _spriteGun: {fileID: 394991653, guid: cda1316b1f6b31e458d01527df0120b4, type: 3}
-  _posOriginAim: {x: 0.82, y: 0.16}
+  _posOriginAim: {x: 0.817, y: 0.033}
   _radiusRotate: 0.6
   _numBullet: 3
   _speedBullet: 18

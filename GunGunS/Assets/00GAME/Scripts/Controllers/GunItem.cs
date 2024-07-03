@@ -23,6 +23,7 @@ public class GunItem : MonoBehaviour
 
 	public void OnItemClick()
 	{
+		AudioManager.instance.PlaySound(AudioManager.instance.UIClips[2],0,false);
 		if (_gunData.isUnlocked())
 		{
 			SpawnController.instance._bullet = _gunData.GetBullet();

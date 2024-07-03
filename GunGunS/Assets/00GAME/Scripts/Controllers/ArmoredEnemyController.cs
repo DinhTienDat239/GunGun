@@ -21,7 +21,7 @@ public class ArmoredEnemyController : EnemyController
         _armor.SetActive(true);
         Rigidbody2D armorRb = _armor.GetComponent<Rigidbody2D>();
         armorRb.gravityScale = 0;
-        _armor.transform.localPosition = new Vector3(0, -0.16f, 0);
+        _armor.transform.localPosition = new Vector3(0, -0.235f, 0);
         _armor.transform.rotation = new Quaternion(0, 0, 0, 0);
 
     }

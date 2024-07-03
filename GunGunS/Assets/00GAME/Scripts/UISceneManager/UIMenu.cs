@@ -41,18 +41,22 @@ public class UIMenu : MonoBehaviour
 	public void PlayBtn()
     {
         GameManager.instance.ChangeState(GameManager.GAME_STATE.PLAY);
+        AudioManager.instance.PlaySound(AudioManager.instance.UIClips[6],0,false);
     }
     public void SettingBtn()
     {
         GameManager.instance.ChangeState(GameManager.GAME_STATE.SETTING);
+        AudioManager.instance.PlaySound(AudioManager.instance.UIClips[6], 0, false);
     }
 	public void SpinBtn()
 	{
 		GameManager.instance.ChangeState(GameManager.GAME_STATE.SPIN);
-	}
+        AudioManager.instance.PlaySound(AudioManager.instance.UIClips[6], 0, false);
+    }
 	public void StoreBtn()
     {
         GameManager.instance.ChangeState(GameManager.GAME_STATE.STORE);
+        AudioManager.instance.PlaySound(AudioManager.instance.UIClips[6], 0, false);
     }
 
     private void OnDestroy()

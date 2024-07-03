@@ -325,7 +325,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5832415671211401798}
@@ -373,7 +373,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gun: {fileID: 7024316046324877983}
   bodyOB: {fileID: 7174550201146299981}
-  _isDeath: 0
   _headCol: {fileID: 5665822397407356886}
   _bodyCol: {fileID: 17917863132744099}
   _gunDatas:

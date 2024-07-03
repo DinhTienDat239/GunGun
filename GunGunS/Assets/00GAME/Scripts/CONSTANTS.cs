@@ -14,6 +14,8 @@ public static class CONSTANTS
     public static string IDGUN = "IDGun";
     public static string IDSKINLAST = "IDSkinLast";
     public static string IDGUNLAST = "IDGunLast";
+    public static string SOUND_MUSIC = "SoundMusic";
+    public static string SOUND_SFX = "SoundSFX";
 
     //Scenes
     public static string SCENE_MAIN = "Main";

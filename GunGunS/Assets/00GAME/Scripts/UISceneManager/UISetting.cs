@@ -10,7 +10,15 @@ public class UISetting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (PlayerPrefs.GetInt(CONSTANTS.SOUND_MUSIC, 1) != 0)
+            _musicOffImage.gameObject.SetActive(false);
+        else
+            _musicOffImage.gameObject.SetActive(true);
+
+        if (PlayerPrefs.GetInt(CONSTANTS.SOUND_SFX, 1) != 0)
+            _soundOffImage.gameObject.SetActive(false);
+        else
+            _soundOffImage.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -29,13 +37,15 @@ public class UISetting : MonoBehaviour
         {
             _musicOffImage.gameObject.SetActive(false);
             //Turn on music
-            AudioManager.instance.ChangeVolume(true);
+            AudioManager.instance.ChangeVolumeMusic(true);
+            PlayerPrefs.SetInt(CONSTANTS.SOUND_MUSIC, 1);
         }
         else
         {
             _musicOffImage.gameObject.SetActive(true);
 			//Turn off music
-			AudioManager.instance.ChangeVolume(false);
+			AudioManager.instance.ChangeVolumeMusic(false);
+            PlayerPrefs.SetInt(CONSTANTS.SOUND_MUSIC, 0);
 		}
     }
 
@@ -44,12 +54,14 @@ public class UISetting : MonoBehaviour
         if (_soundOffImage.gameObject.activeSelf)
         {
             _soundOffImage.gameObject.SetActive(false);
-            //Turn on sound
+            AudioManager.instance.ChangeVolumeSFX(true);
+            PlayerPrefs.SetInt(CONSTANTS.SOUND_SFX, 1);
         }
         else
         {
             _soundOffImage.gameObject.SetActive(true);
-            //Turn off sound
+            AudioManager.instance.ChangeVolumeSFX(false);
+            PlayerPrefs.SetInt(CONSTANTS.SOUND_SFX, 0);
         }
     }
 }

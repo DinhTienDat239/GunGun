@@ -109,9 +109,10 @@ public class EnemyController : MonoBehaviour
 			SpawnController.instance.SpawnCoins(this.transform.position, _coins);
 			Observer.instance.Notify(CONSTANTS.UIPLAY_COMBOTXT, null);
 			Observer.instance.Notify(CONSTANTS.UIPLAY_HEADSHOT, null);
+			AudioManager.instance.PlaySound(AudioManager.instance.UIClips[7], 0, false);
 		}
-		_rb.AddForce(Vector2.up * Random.Range(200f, 300f));
-		_rb.AddTorque(Random.Range(300f, 400f));
+		_rb.AddForce(Vector2.up * Random.Range(400f, 500f));
+		_rb.AddTorque(Random.Range(500f, 600f));
 		PlayerController.instance.isMove = true;
 		GameManager.instance.enemyDie++;
 

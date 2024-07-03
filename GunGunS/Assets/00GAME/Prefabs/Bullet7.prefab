@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8442070859097466938}
   - component: {fileID: 8914323343371187424}
   - component: {fileID: -681761886007520082}
-  - component: {fileID: 5654678239553517929}
+  - component: {fileID: 8210985917043901638}
   m_Layer: 0
   m_Name: Bullet7
   m_TagString: BulletPlayer
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.515, y: 0.31500003, z: -5}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.225, y: 0.225, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -199095847, guid: 20b72630f5d389d40bae16242aa44933, type: 3}
+  m_Sprite: {fileID: -200240870, guid: 20b72630f5d389d40bae16242aa44933, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.5725, y: 0.275}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 20
---- !u!68 &5654678239553517929
+--- !u!68 &8210985917043901638
 EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,14 +162,12 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 0.029467463, y: 0.21884492}
-  - {x: -0.10212223, y: 0.18418397}
-  - {x: -0.20944715, y: 0.057781987}
-  - {x: -0.19807814, y: -0.07232702}
-  - {x: 0.78340536, y: -0.73683095}
-  - {x: 0.80034584, y: -0.73167264}
-  - {x: 0.80674374, y: -0.7181874}
-  - {x: 0.020082273, y: 0.21471581}
+  - {x: -0.101561844, y: -0.13551116}
+  - {x: -0.16056538, y: -0.055233497}
+  - {x: -0.15276472, y: 0.058255248}
+  - {x: -0.10308345, y: 0.123707116}
+  - {x: 0.77477765, y: -0.032011423}
+  - {x: -0.098138794, y: -0.14264335}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0

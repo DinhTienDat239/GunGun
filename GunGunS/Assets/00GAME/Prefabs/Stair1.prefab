@@ -890,7 +890,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5090037753896046503}
@@ -917,7 +917,8 @@ MonoBehaviour:
   height: 0
   _stairColor: {r: 0, g: 0, b: 0, a: 0}
   _bgColor: {r: 0, g: 0, b: 0, a: 0}
-  checkInput: 1
+  hasChangedColor: 0
+  changedColor: 0
   _stairs:
   - {fileID: 8676994140009909051}
   - {fileID: 3969504258957855683}

@@ -5,9 +5,7 @@
 public class GunData : ScriptableObject
 {
 	[SerializeField] string _gunID;
-
 	[SerializeField] Sprite _spriteGun;
-	[SerializeField] Vector2 _posOriginAim;
 	[SerializeField] float _radiusRotate;
 	[SerializeField] int _numBullet;
 	[SerializeField] float _speedBullet;
@@ -52,10 +50,7 @@ public class GunData : ScriptableObject
 	{
 		return _spriteGun;
 	}
-	public Vector2 GetPosOriginAim()
-	{
-		return _posOriginAim;
-	}
+
 	public float GetRadiusRotate()
 	{
 		return _radiusRotate;

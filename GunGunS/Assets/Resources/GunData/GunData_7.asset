@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GunData_7
   m_EditorClassIdentifier: 
   _gunID: G7
-  _spriteGun: {fileID: -199095847, guid: 20b72630f5d389d40bae16242aa44933, type: 3}
+  _spriteGun: {fileID: -200240870, guid: 20b72630f5d389d40bae16242aa44933, type: 3}
   _posOriginAim: {x: 0, y: 0}
   _radiusRotate: 0.6
   _numBullet: 3

@@ -31,6 +31,7 @@ public class UIStore : MonoBehaviour
         Observer.instance.AddListener(CONSTANTS.UISTORE_PLAYER, UpdatePlayerStore);
 		Observer.instance.AddListener(CONSTANTS.UISTORE_UPDATECOIN, UpdateCoinTxt);
 		Observer.instance.Notify(CONSTANTS.UISTORE_PLAYER, null);
+        AudioManager.instance.PlaySound(AudioManager.instance.UIClips[5],0,false);
 	}
 
     // Update is called once per frame

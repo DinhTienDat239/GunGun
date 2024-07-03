@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: GunData_2
   m_EditorClassIdentifier: 
   _gunID: G2
-  _spriteGun: {fileID: -1316612120, guid: 77f990652d422c14e88a4348f0c80ecf, type: 3}
-  _posOriginAim: {x: 0, y: 0}
+  _spriteGun: {fileID: -1990320802, guid: 77f990652d422c14e88a4348f0c80ecf, type: 3}
+  _posOriginAim: {x: 0.536, y: 0.002}
   _radiusRotate: 2
   _numBullet: 1
   _speedBullet: 15

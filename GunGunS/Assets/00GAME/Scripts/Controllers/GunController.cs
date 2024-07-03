@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GunController : MonoBehaviour
@@ -129,11 +130,13 @@ public class GunController : MonoBehaviour
 	//bullet basic
 	void Fire1BulletBasic()
 	{
-		SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, PlayerController.instance._aimPos - (Vector2)this.transform.position, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
+        AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
+        SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, PlayerController.instance._aimPos - (Vector2)this.transform.position, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
 	}
 
 	void Fire1BulletBasic(Vector2 dir, int facing)
 	{
+		AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
 		SpawnController.instance.SpawnBulletEnemy(_gunData.GetNumID(), this.transform.position, dir, facing, _gunData.GetSpeedBullet());
 	}
 
@@ -148,8 +151,8 @@ public class GunController : MonoBehaviour
 				dir = Quaternion.Euler(0, 0, offsetAngle) * dir;
 			}
 			SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, dir, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
-
-			yield return new WaitForSeconds(0.05f);
+            AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
+            yield return new WaitForSeconds(0.05f);
 		}
 	}
 
@@ -164,8 +167,8 @@ public class GunController : MonoBehaviour
 			}
 
 			SpawnController.instance.SpawnBulletEnemy(_gunData.GetNumID(), this.transform.position, dir, facing, _gunData.GetSpeedBullet());
-
-			yield return new WaitForSeconds(0.05f);
+            AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
+            yield return new WaitForSeconds(0.05f);
 		}
 	}
 
@@ -184,8 +187,8 @@ public class GunController : MonoBehaviour
 				float offsetAngle = Random.Range(-2f, 2f);
 				dir = Quaternion.Euler(0, 0, offsetAngle) * dir;
 			}
-
-			SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, dir, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
+            AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
+            SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, dir, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
 		}
 	}
 
@@ -203,8 +206,8 @@ public class GunController : MonoBehaviour
 				float offsetAngle = Random.Range(-2f, 2f);
 				dir = Quaternion.Euler(0, 0, offsetAngle) * dir;
 			}
-
-			SpawnController.instance.SpawnBulletEnemy(_gunData.GetNumID(), this.transform.position, dir, facing, _gunData.GetSpeedBullet());
+            AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
+            SpawnController.instance.SpawnBulletEnemy(_gunData.GetNumID(), this.transform.position, dir, facing, _gunData.GetSpeedBullet());
 		}
 	}
 
@@ -213,12 +216,14 @@ public class GunController : MonoBehaviour
 	{
 		this.GetComponent<Renderer>().enabled = false;
 		SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, PlayerController.instance._aimPos - (Vector2)this.transform.position, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
-	}
+        AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
+    }
 
 	void Fire1BulletRotate(Vector2 dir, int facing)
 	{
 		SpawnController.instance.SpawnBulletEnemy(_gunData.GetNumID(), this.transform.position, dir, facing, _gunData.GetSpeedBullet());
-	}
+        AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
+    }
 
 	IEnumerator FireMutiBulletRotate()
 	{
@@ -231,8 +236,8 @@ public class GunController : MonoBehaviour
 				dir = Quaternion.Euler(0, 0, offsetAngle) * dir;
 			}
 			SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, dir, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
-
-			yield return new WaitForSeconds(0.05f);
+            AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
+            yield return new WaitForSeconds(0.05f);
 		}
 	}
 
@@ -247,8 +252,8 @@ public class GunController : MonoBehaviour
 			}
 
 			SpawnController.instance.SpawnBulletEnemy(_gunData.GetNumID(), this.transform.position, dir, facing, _gunData.GetSpeedBullet());
-
-			yield return new WaitForSeconds(0.05f);
+            AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
+            yield return new WaitForSeconds(0.05f);
 		}
 	}
 
@@ -261,6 +266,5 @@ public class GunController : MonoBehaviour
 	void UpdateGunProperties()
 	{
 		this.GetComponent<SpriteRenderer>().sprite = _gunData.GetSpriteGun();
-		_obOriginAim.transform.localPosition = _gunData.GetPosOriginAim(); 
     }
 }

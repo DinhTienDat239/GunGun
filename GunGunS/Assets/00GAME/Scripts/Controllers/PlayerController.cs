@@ -12,6 +12,8 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] public bool isMove;
     [SerializeField] bool _isJump;
     [SerializeField] public bool shooted;
+    [SerializeField] public bool isDeath;
+    public bool isFollow = true;
 
     //Aiming mechanic vars
     [Header("-- Aim info --")]
@@ -27,6 +29,7 @@ public class PlayerController : Singleton<PlayerController>
     Rigidbody2D _rb;
     LineRenderer _lineAim;
     SpriteRenderer _spriteRenderer;
+    Collider2D _col;
 
     //Pos origin
     Vector3? posOrigin = null;
@@ -38,6 +41,7 @@ public class PlayerController : Singleton<PlayerController>
         _lineAim.endWidth = 0.03f;
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _col = GetComponentInChildren<Collider2D>();
         posOrigin = this.transform.position;
     }
 
@@ -101,6 +105,12 @@ public class PlayerController : Singleton<PlayerController>
         _speedRotate = 45f;
         _gun.transform.eulerAngles = new Vector3(0f, 180f, 0f);
         _angleRotate = 180f;
+        _col.isTrigger = false;
+        isFollow = true;
+        isDeath = false;
+        _rb.velocity = Vector3.zero;
+        _rb.freezeRotation = true;
+        this.transform.eulerAngles = Vector3.zero;
         this.transform.position = (Vector3)posOrigin;
         if (this.facingDir == 1)
             this.Flip();
@@ -108,8 +118,9 @@ public class PlayerController : Singleton<PlayerController>
         shooted = false;
 
 		SpawnController.instance._bullet = this.GetComponentInChildren<GunController>().GetGunData().GetBullet();
-        _vs.transform.position = _gun.GetComponent<GunController>().transform.position;
-    }
+		_vs.transform.position = new Vector3(_gun.transform.position.x, _gun.transform.position.y, -0.5f);
+		_vs.VisionRange = _gun.GetComponent<GunController>().GetGunData().GetRadiusRotate() * 2.5f;
+	}
 
     private void Movement()
     {
@@ -135,8 +146,7 @@ public class PlayerController : Singleton<PlayerController>
 
     void UpdateAim()
     {
-        _vs.gameObject.SetActive(true);
-        PlayerController.instance._vs.VisionRange = _gun.GetComponent<GunController>().GetGunData().GetRadiusRotate() * 3;
+        _vs.gameObject.SetActive(true);       
 
         if (facingDir == -1)
         {
@@ -160,17 +170,14 @@ public class PlayerController : Singleton<PlayerController>
                 _rotationDir *= -1;
 
             _vs.VisionAngle = Mathf.Deg2Rad * _angleRotate;
-            _vs.transform.rotation = Quaternion.Euler(new Vector3((_angleRotate / 2) +180, -90, 90));
-        }
+            _vs.transform.rotation = Quaternion.Euler(new Vector3((_angleRotate / 2) + 180, -90, 90));
+        }  
 
-
-        
-
-        float x = _gun.GetComponent<GunController>().GetObOriginAim().transform.position.x + _gun.GetComponent<GunController>().GetGunData().GetRadiusRotate() * Mathf.Cos(_angleRotate * Mathf.Deg2Rad);
-        float y = _gun.GetComponent<GunController>().GetObOriginAim().transform.position.y + _gun.GetComponent<GunController>().GetGunData().GetRadiusRotate() * Mathf.Sin(_angleRotate * Mathf.Deg2Rad);
+        float x = _gun.GetComponent<GunController>().transform.position.x + _gun.GetComponent<GunController>().GetGunData().GetRadiusRotate() * Mathf.Cos(_angleRotate * Mathf.Deg2Rad);
+        float y = _gun.GetComponent<GunController>().transform.position.y + _gun.GetComponent<GunController>().GetGunData().GetRadiusRotate() * Mathf.Sin(_angleRotate * Mathf.Deg2Rad);
         _aimPos = new Vector2(x, y);
         _lineAim.positionCount = 2;
-        _lineAim.SetPosition(0, _gun.GetComponent<GunController>().GetObOriginAim().transform.position);
+        _lineAim.SetPosition(0, _gun.GetComponent<GunController>().transform.position);
         _lineAim.SetPosition(1, _aimPos);
         
     }
@@ -199,6 +206,9 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isDeath)
+            return;
+
         if (collision.tag == "Jump")
         {
             _isJump = true;
@@ -255,10 +265,21 @@ public class PlayerController : Singleton<PlayerController>
     public void SetSkin(SkinData skinData)
     {
         _spriteRenderer.sprite = skinData.GetSpriteSkin();
-        
-    }
+		_vs.transform.position = new Vector3(_gun.transform.position.x, _gun.transform.position.y, -0.5f);
+		_vs.VisionRange = _gun.GetComponent<GunController>().GetGunData().GetRadiusRotate() * 2.5f;
+	}
     public Sprite GetSkin()
     {
         return _spriteRenderer.sprite;
+    }
+    public void Death()
+    {
+        isDeath = true;
+        isFollow = false;
+        _col.isTrigger = true;
+        _rb.freezeRotation = false;
+        _rb.AddForce(Vector2.up * Random.Range(200f, 300f));
+        _rb.AddTorque(Random.Range(300f, 400f));
+        
     }
 }

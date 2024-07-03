@@ -96,6 +96,7 @@ public class BulletController : MonoBehaviour
             //lose
             GameManager.instance.ChangeState(GameManager.GAME_STATE.OVER);
             this.gameObject.SetActive(false);
+            PlayerController.instance.Death();
         }
     }
 }
