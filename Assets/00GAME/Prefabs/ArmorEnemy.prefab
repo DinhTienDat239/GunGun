@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 609773494097408858}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: -0.29999995}
+  m_LocalPosition: {x: 0, y: 0.6, z: -0.29999995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -358,7 +358,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &3445467358476724502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,13 +374,14 @@ MonoBehaviour:
   _gun: {fileID: 7024316046324877983}
   bodyOB: {fileID: 7174550201146299981}
   _headCol: {fileID: 5665822397407356886}
-  _bodyCol: {fileID: 17917863132744099}
+  _bodyCol: {fileID: 3307564191428649475}
   _gunDatas:
   - {fileID: 11400000, guid: 4ec9fff4635cc9e499fae0bf95466f5e, type: 2}
   - {fileID: 11400000, guid: fe76816604170a6418c3f2a166cfad85, type: 2}
-  - {fileID: 11400000, guid: d302dc070f97beb47af1ce117f1d7dee, type: 2}
-  - {fileID: 11400000, guid: 9c689ea8843c89745be7da167bc5da6e, type: 2}
+  - {fileID: 11400000, guid: 5b58b1d2fb0edd34e9acff5015ed3e3a, type: 2}
+  - {fileID: 11400000, guid: 8d0191c31a6176e4ead2f5c360363d7b, type: 2}
   _armor: {fileID: 2392157492711708745}
+  _armorY: -0.235
 --- !u!1 &7024316046324877983
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +494,7 @@ GameObject:
   m_Component:
   - component: {fileID: 302928633870857467}
   - component: {fileID: 2678498752818438330}
-  - component: {fileID: 17917863132744099}
+  - component: {fileID: 3307564191428649475}
   m_Layer: 0
   m_Name: Body
   m_TagString: EnemyBody
@@ -568,7 +569,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &17917863132744099
+--- !u!60 &3307564191428649475
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

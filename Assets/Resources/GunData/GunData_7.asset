@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: GunData_7
   m_EditorClassIdentifier: 
   _gunID: G7
+  _gunName: KUNAI
   _spriteGun: {fileID: -200240870, guid: 20b72630f5d389d40bae16242aa44933, type: 3}
-  _posOriginAim: {x: 0, y: 0}
-  _radiusRotate: 0.6
+  _radiusRotate: 0.5
   _numBullet: 3
-  _speedBullet: 10
+  _speedBullet: 12
   _bullet: {fileID: 1542424707838665370, guid: 847260fffe2f1c14fb19d90a885ccdd9, type: 3}
-  _unlocked: 1
-  _price: 0
-  _shotSound: {fileID: 0}
+  _unlocked: 0
+  _price: 4000
+  _shotSound: {fileID: 8300000, guid: 0dc0d7b9fac17c94481291ee3e07650f, type: 3}
   _styleFire: FireShotGunBasic
+  _shakeGun: 1

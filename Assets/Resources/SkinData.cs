@@ -5,6 +5,7 @@ using UnityEngine;
 public class SkinData : ScriptableObject
 {
     [SerializeField] private string _skinID;
+	[SerializeField] private string _skinName;
     [SerializeField] private Sprite _spriteSkin;
     [SerializeField] private bool _unlocked;
     [SerializeField] private int _price;
@@ -12,6 +13,11 @@ public class SkinData : ScriptableObject
 	public string GetFileName()
 	{
 		return this.name;
+	}
+
+	public string GetName()
+	{
+		return this._skinName;
 	}
 
 	public string GetSkinID()

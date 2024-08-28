@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -13,6 +14,8 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] bool _isJump;
     [SerializeField] public bool shooted;
     [SerializeField] public bool isDeath;
+
+    //cam follow
     public bool isFollow = true;
 
     //Aiming mechanic vars
@@ -22,7 +25,7 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] float _speedRotate;
     [SerializeField] float _angleRotate;
     [SerializeField] int _rotationDir;
-    [SerializeField] GameObject _gun;
+    [SerializeField] GunController _gun;
     [SerializeField] public VisionCone _vs;
 
     //Components
@@ -34,11 +37,20 @@ public class PlayerController : Singleton<PlayerController>
     //Pos origin
     Vector3? posOrigin = null;
 
+    //Infor save for revive
+    [SerializeField] Vector3? _posSave = null;
+    [SerializeField] bool _canFLip = true;
+
+    //Check spawn
+    public bool spawnCheck;
+
+
     public void Start()
     {
+
         _lineAim = GetComponentInChildren<LineRenderer>();
-        _lineAim.startWidth = 0.03f;
-        _lineAim.endWidth = 0.03f;
+        _lineAim.startWidth = 0.015f;
+        _lineAim.endWidth = 0.015f;
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _col = GetComponentInChildren<Collider2D>();
@@ -49,7 +61,7 @@ public class PlayerController : Singleton<PlayerController>
     {
         if (GameManager.instance.gameState != GameManager.GAME_STATE.PLAY)
         {
-            DeleteLineAim();
+            DeleteLineAimAndVision();
             return;
         }
 
@@ -57,7 +69,7 @@ public class PlayerController : Singleton<PlayerController>
         {
             shooted = true;
             GameManager.instance.ResetTime();
-            _gun.GetComponent<GunController>().Fire();
+            _gun.Fire();
         }
 
         Movement();
@@ -67,22 +79,22 @@ public class PlayerController : Singleton<PlayerController>
 
     void UpdateDificult()
     {
-        if (GameManager.instance.score > 300)
+        if (GameManager.instance.score > 200)
         {
             _speedRotate = 70;
             _speed = 4.5f;
         }
-        else if (GameManager.instance.score > 200)
+        else if (GameManager.instance.score > 150)
         {
             _speedRotate = 65f;
             _speed = 4f;
         }
-        else if (GameManager.instance.score > 100)
+        else if (GameManager.instance.score > 80)
         {
             _speedRotate = 60f;
             _speed = 3.8f;
         }
-        else if (GameManager.instance.score > 50)
+        else if (GameManager.instance.score > 40)
         {
             _speedRotate = 55f;
             _speed = 3.6f;
@@ -101,9 +113,9 @@ public class PlayerController : Singleton<PlayerController>
 
     public void Init()
     {
+        _canFLip = true;
         _speed = 3;
         _speedRotate = 45f;
-        _gun.transform.eulerAngles = new Vector3(0f, 180f, 0f);
         _angleRotate = 180f;
         _col.isTrigger = false;
         isFollow = true;
@@ -112,20 +124,22 @@ public class PlayerController : Singleton<PlayerController>
         _rb.freezeRotation = true;
         this.transform.eulerAngles = Vector3.zero;
         this.transform.position = (Vector3)posOrigin;
+        _gun.transform.eulerAngles = new Vector3(0f, 180f, 0f);
         if (this.facingDir == 1)
             this.Flip();
         fireCorrect = true;
         shooted = false;
 
-		SpawnController.instance._bullet = this.GetComponentInChildren<GunController>().GetGunData().GetBullet();
-		_vs.transform.position = new Vector3(_gun.transform.position.x, _gun.transform.position.y, -0.5f);
-		_vs.VisionRange = _gun.GetComponent<GunController>().GetGunData().GetRadiusRotate() * 3.3f;
-	}
+        spawnCheck = true;
+        SpawnController.instance._bullet = this.GetComponentInChildren<GunController>().GetGunData().GetBullet();
+        _vs.transform.position = new Vector3(_gun.transform.position.x, _gun.transform.position.y, -0.5f);
+        _vs.VisionRange = _gun.GetGunData().GetRadiusRotate() * 3.35f;
+    }
 
     private void Movement()
     {
         if (shooted)
-            DeleteLineAim();
+            DeleteLineAimAndVision();
 
         if (!isMove)
         {
@@ -137,7 +151,7 @@ public class PlayerController : Singleton<PlayerController>
 
         if (_isJump)
         {
-            _rb.velocity = new Vector2(_speed * facingDir, _speed * (_speed >= 3.6f ? 1.2f : 1.4f));
+            _rb.velocity = new Vector2(_speed * facingDir, _speed * (_speed >= 3.6f ? 1.4f : 1.6f));
             return;
         }
 
@@ -146,8 +160,6 @@ public class PlayerController : Singleton<PlayerController>
 
     void UpdateAim()
     {
-        _vs.gameObject.SetActive(true);       
-
         if (facingDir == -1)
         {
             _gun.transform.eulerAngles = new Vector3(_gun.transform.eulerAngles.x, _gun.transform.eulerAngles.y, 180 - _angleRotate);
@@ -156,9 +168,6 @@ public class PlayerController : Singleton<PlayerController>
                 _angleRotate -= t;
             else
                 _rotationDir *= -1;
-
-            _vs.VisionAngle = Mathf.Deg2Rad * (180 - _angleRotate);
-            _vs.transform.rotation = Quaternion.Euler(new Vector3(- (180 -_angleRotate) / 2, -90, 90));
         }
         else
         {
@@ -168,30 +177,42 @@ public class PlayerController : Singleton<PlayerController>
                 _angleRotate += t;
             else
                 _rotationDir *= -1;
+        }
 
-            _vs.VisionAngle = Mathf.Deg2Rad * _angleRotate;
-            _vs.transform.rotation = Quaternion.Euler(new Vector3((_angleRotate / 2) + 180, -90, 90));
-        }  
-
-        float x = _gun.GetComponent<GunController>().transform.position.x + _gun.GetComponent<GunController>().GetGunData().GetRadiusRotate() * Mathf.Cos(_angleRotate * Mathf.Deg2Rad);
-        float y = _gun.GetComponent<GunController>().transform.position.y + _gun.GetComponent<GunController>().GetGunData().GetRadiusRotate() * Mathf.Sin(_angleRotate * Mathf.Deg2Rad);
+        float x = _gun.transform.position.x + _gun.GetGunData().GetRadiusRotate() * Mathf.Cos(_angleRotate * Mathf.Deg2Rad);
+        float y = _gun.transform.position.y + _gun.GetGunData().GetRadiusRotate() * Mathf.Sin(_angleRotate * Mathf.Deg2Rad);
         _aimPos = new Vector2(x, y);
         _lineAim.positionCount = 2;
-        _lineAim.SetPosition(0, _gun.GetComponent<GunController>().transform.position);
+        _lineAim.SetPosition(0, _gun.transform.position);
         _lineAim.SetPosition(1, _aimPos);
-        
+
+        UpdateVision();
     }
 
-    void DeleteLineAim()
+    void UpdateVision()
     {
-        _lineAim.positionCount = 0;
-        _vs.VisionAngle = 0;
+        if (facingDir == -1)
+        {
+            _vs.VisionAngle = Mathf.Deg2Rad * (180 - _angleRotate);
+            _vs.transform.rotation = Quaternion.Euler(new Vector3(-(180 - _angleRotate) / 2, -90, 90));
+        }
+        else
+        {
+            _vs.VisionAngle = Mathf.Deg2Rad * _angleRotate;
+            _vs.transform.rotation = Quaternion.Euler(new Vector3((_angleRotate / 2) + 180, -90, 90));
+        }
+        _vs.gameObject.SetActive(true);
+    }
+
+    void DeleteLineAimAndVision()
+    {
         _vs.gameObject.SetActive(false);
+        _lineAim.positionCount = 0;
     }
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawLine(_gun.GetComponent<GunController>().GetObOriginAim().transform.position, (Vector2)_aimPos);
+        Gizmos.DrawLine(_gun.GetObOriginAim().transform.position, (Vector2)_aimPos);
     }
 
     public void Flip()
@@ -214,14 +235,14 @@ public class PlayerController : Singleton<PlayerController>
             _isJump = true;
         }
 
-        if (collision.gameObject.tag == "Stop")
+        if (collision.gameObject.tag == "Stop" && _canFLip)
         {
             Flip();
             isMove = false;
             shooted = false;
         }
 
-        if (collision.gameObject.tag == "ColSpawn")
+        if (collision.gameObject.tag == "ColSpawn" && spawnCheck)
         {
             // Tìm Stop
             Transform parentTransform = collision.transform.parent;
@@ -239,12 +260,16 @@ public class PlayerController : Singleton<PlayerController>
                 }
             }
 
-            // Spawn
+            // Spawn enemy
             if (stopObject != null)
             {
                 Vector2 spawnPosition = stopObject.transform.position;
-                spawnPosition = new Vector2(spawnPosition.x, spawnPosition.y + 0.4f);
-                if (GameManager.instance.enemyDie % 10 == 0 && GameManager.instance.enemyDie != 0)
+                if (parentTransform.rotation.y == 0)
+                    spawnPosition = new Vector2(spawnPosition.x + Random.Range(0f, 0.5f), spawnPosition.y);
+                else
+                    spawnPosition = new Vector2(spawnPosition.x + Random.Range(-0.5f, 0f), spawnPosition.y);
+
+                if (GameManager.instance.enemyDie % 5 == 0 && GameManager.instance.enemyDie != 0)
                     SpawnController.instance.SpawnSpecialEnemy(spawnPosition, parentTransform.rotation.y == 0 ? -1 : 1);
                 else
                     SpawnController.instance.SpawnEnemy(spawnPosition, parentTransform.rotation.y == 0 ? -1 : 1);
@@ -265,23 +290,58 @@ public class PlayerController : Singleton<PlayerController>
     public void SetSkin(SkinData skinData)
     {
         _spriteRenderer.sprite = skinData.GetSpriteSkin();
-		_vs.transform.position = new Vector3(_gun.transform.position.x, _gun.transform.position.y, -0.5f);
-		_vs.VisionRange = _gun.GetComponent<GunController>().GetGunData().GetRadiusRotate() * 3.3f;
-	}
+        _vs.transform.position = new Vector3(_gun.transform.position.x, _gun.transform.position.y, -0.5f);
+        _vs.VisionRange = _gun.GetGunData().GetRadiusRotate() * 3.35f;
+    }
+
     public Sprite GetSkin()
     {
         return _spriteRenderer.sprite;
     }
+
     public void Death()
     {
-        if(isDeath) return;
+        if (isDeath) return;
 
+        SaveBeforeDeath();
         isDeath = true;
         isFollow = false;
         _col.isTrigger = true;
         _rb.freezeRotation = false;
+        _canFLip = false;
         _rb.AddForce(Vector2.up * Random.Range(400f, 500f));
         _rb.AddTorque(Random.Range(500f, 600f));
-        
+
+    }
+
+    public void SaveBeforeDeath()
+    {
+        this._posSave = this.transform.position;
+
+    }
+
+    public void LoadAfterRevive()
+    {
+        // no spawn
+        spawnCheck = false;
+
+        this.transform.position = (Vector3)this._posSave;
+        this.transform.rotation = Quaternion.Euler(Vector3.zero);
+
+        _rb.velocity = Vector2.zero;
+        _rb.angularVelocity = 0f;
+
+        shooted = false;
+        isDeath = false;
+        isFollow = true;
+        _col.isTrigger = false;
+        _rb.freezeRotation = true;
+        StartCoroutine(ResetCanFlip());
+    }
+
+    IEnumerator ResetCanFlip()
+    {
+        yield return new WaitForSeconds(0.2f);
+        _canFLip = true;
     }
 }

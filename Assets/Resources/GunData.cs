@@ -5,6 +5,7 @@
 public class GunData : ScriptableObject
 {
 	[SerializeField] string _gunID;
+	[SerializeField] string _gunName;
 	[SerializeField] Sprite _spriteGun;
 	[SerializeField] float _radiusRotate;
 	[SerializeField] int _numBullet;
@@ -14,10 +15,16 @@ public class GunData : ScriptableObject
 	[SerializeField] int _price;
 	[SerializeField] AudioClip _shotSound;
 	[SerializeField] string _styleFire;
+	[SerializeField] float _shakeGun;
 
 	public string GetStyleFire()
 	{
 		return _styleFire;
+	}
+
+	public string GetName()
+	{
+		return _gunName;
 	}
 
 	public int GetNumID()
@@ -86,6 +93,11 @@ public class GunData : ScriptableObject
 	public AudioClip GetShotSound()
 	{
 		return _shotSound;
+	}
+
+	public float GetShakeGun()
+	{
+		return _shakeGun;
 	}
 }
 

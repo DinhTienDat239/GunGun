@@ -19,6 +19,8 @@ public class UIStore : MonoBehaviour
     [SerializeField] Image _playerSkin;
     [SerializeField] Image _playerGun;
 
+    
+
     [SerializeField] float _slideSpeed = 50;
 
     GunItem _gunItem = null;

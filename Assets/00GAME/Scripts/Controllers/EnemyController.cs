@@ -47,9 +47,13 @@ public class EnemyController : MonoBehaviour
 			a.gameObject.SetActive(true);
 		}
 		transform.position = pos;
-		this.gameObject.SetActive(true);
+		
 
-	}
+        if (_rb != null)
+            _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        this.gameObject.SetActive(true);
+
+    }
 
 	public virtual void Update()
 	{
@@ -94,7 +98,8 @@ public class EnemyController : MonoBehaviour
 	{
 		if (_isDeath) return;
 
-		SpawnController.instance.SpawnParticlesEnemyDeath(this.transform.position);
+        _rb.constraints = RigidbodyConstraints2D.None;
+        SpawnController.instance.SpawnBloodBurst(this.transform.position);
 
 		SpawnController.instance._canUpColor = true;
 		GameManager.instance.UpdateScoreAndMoney(hit, (hit == 1 ? 1 : GetCoin()));
@@ -113,7 +118,9 @@ public class EnemyController : MonoBehaviour
 		}
 		_rb.AddForce(Vector2.up * Random.Range(400f, 500f));
 		_rb.AddTorque(Random.Range(500f, 600f));
+		AudioManager.instance.PlaySound(AudioManager.instance.UIClips[11], 0, false);
 		PlayerController.instance.isMove = true;
+		PlayerController.instance.spawnCheck = true;
 		GameManager.instance.enemyDie++;
 
 	}

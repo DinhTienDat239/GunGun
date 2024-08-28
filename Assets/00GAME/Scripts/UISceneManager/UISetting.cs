@@ -7,6 +7,8 @@ public class UISetting : MonoBehaviour
 {
     [SerializeField] Image _musicOffImage;
     [SerializeField] Image _soundOffImage;
+
+    [SerializeField] GameObject _rewardBox;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,5 +65,38 @@ public class UISetting : MonoBehaviour
             AudioManager.instance.ChangeVolumeSFX(false);
             PlayerPrefs.SetInt(CONSTANTS.SOUND_SFX, 0);
         }
+    }
+
+    public void FacebookBtn()
+    {
+        Application.OpenURL("http://facebook.com/");
+        if(PlayerPrefs.GetInt(CONSTANTS.CLAIMED_FB,0) == 0)
+        {
+            PlayerPrefs.SetInt(CONSTANTS.CLAIMED_FB, 1);
+            GameManager.instance.money += 100;
+            GameManager.instance.SaveMoney();
+            ShowRewardBox();
+        }
+    }
+    public void InstagramBtn()
+    {
+        Application.OpenURL("http://instagram.com/");
+        if (PlayerPrefs.GetInt(CONSTANTS.CLAIMED_IG, 0) == 0)
+        {
+            PlayerPrefs.SetInt(CONSTANTS.CLAIMED_IG, 1);
+            GameManager.instance.money += 100;
+            GameManager.instance.SaveMoney();
+            ShowRewardBox();
+        }
+    }
+
+    public void ShowRewardBox()
+    {
+        _rewardBox.gameObject.SetActive(true);
+    }
+
+    public void ClaimBtn()
+    {
+        _rewardBox.gameObject.SetActive(false);
     }
 }

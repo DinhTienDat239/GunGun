@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+using Random = UnityEngine.Random;
 
 public class SpawnController : Singleton<SpawnController>
 {
@@ -14,22 +15,33 @@ public class SpawnController : Singleton<SpawnController>
 	[SerializeField] public GameObject _bullet;
 	[SerializeField] public GameObject _bulletEnemy;
 
-	[SerializeField] GameObject _enemyPrefab;
+	[SerializeField] List<GameObject> _enemyPrefab;
 	[SerializeField] List<GameObject> _enemySpecialPrefab;
 	[SerializeField] GameObject _coinPrefab;
 
-	[SerializeField] GameObject _particles;
+	[SerializeField] GameObject _bloodBurst, _confettiBurst;
 
-	public bool _canUpColor;
+    [SerializeField] bool _canSpawnEnemy = true;
+
+    public bool _canUpColor;
 
 	void Start()
 	{
-		//Start ch? kh?i t?o các pool
-		ObjectPooling.instance.CreatePool(_stairPrefabs[0], _stairNum);
-		ObjectPooling.instance.CreatePool(_stairPrefabs[1], _stairNum);		
-		ObjectPooling.instance.CreatePool(_enemyPrefab, 1);
-		ObjectPooling.instance.CreatePool(_coinPrefab, 5);
-		ObjectPooling.instance.CreatePool(_particles, 1);
+		for(int i = 0; i < _stairPrefabs.Count; i++)
+		{
+            ObjectPooling.instance.CreatePool(_stairPrefabs[i], _stairNum);
+        }
+		foreach(var i in _enemyPrefab)
+		{
+            ObjectPooling.instance.CreatePool(i, 1);
+        }
+        foreach (var i in _enemySpecialPrefab)
+        {
+            ObjectPooling.instance.CreatePool(i, 1);
+        }
+        ObjectPooling.instance.CreatePool(_coinPrefab, 5);
+		ObjectPooling.instance.CreatePool(_bloodBurst, 3);
+		ObjectPooling.instance.CreatePool(_confettiBurst, 1);
 	}
 
 	public void Init()
@@ -42,7 +54,7 @@ public class SpawnController : Singleton<SpawnController>
 
 	public GameObject SpawnStair(GameObject aboveObj, int leftRight)
 	{
-		GameObject stair = ObjectPooling.instance.GetObject(_stairPrefabs[Random.Range(0, 2)]);
+		GameObject stair = ObjectPooling.instance.GetObject(_stairPrefabs[Random.Range(0, _stairPrefabs.Count)]);
 		Stair s = stair.GetComponent<Stair>();
 		if (leftRight != -1)
 		{
@@ -108,13 +120,22 @@ public class SpawnController : Singleton<SpawnController>
 
 	public void SpawnEnemy(Vector2 pos, int dir)
 	{
-		GameObject g = ObjectPooling.instance.GetObject(_enemyPrefab);
-		g.GetComponent<EnemyController>().Init(pos, dir);
+        if (!_canSpawnEnemy)
+            return;
+        StartCoroutine(WaitSpawn());
+
+        int numRandom = Random.Range(0, _enemyPrefab.Count);
+        GameObject g = ObjectPooling.instance.GetObject(_enemyPrefab[numRandom]);
+        g.GetComponent<EnemyController>().Init(pos, dir);
 	}
 
 	public void SpawnSpecialEnemy(Vector2 pos, int dir)
 	{
-		int numRandom = Random.Range(0, _enemySpecialPrefab.Count);
+        if (!_canSpawnEnemy)
+            return;
+        StartCoroutine(WaitSpawn());
+
+        int numRandom = Random.Range(0, _enemySpecialPrefab.Count);
 		GameObject g = ObjectPooling.instance.GetObject(_enemySpecialPrefab[numRandom]);
 		g.GetComponent<EnemyController>().Init(pos, dir);
 	}
@@ -127,15 +148,30 @@ public class SpawnController : Singleton<SpawnController>
 		}
 	}
 
-	public void SpawnParticlesEnemyDeath(Vector3 pos)
+	public void SpawnBloodBurst(Vector3 pos)
 	{
-		ObjectPooling.instance.GetObject(_particles).GetComponent<BurstParticles>().Init(pos);
+		ObjectPooling.instance.GetObject(_bloodBurst).GetComponent<BurstParticles>().Init(pos);
 	}
 
+	public void SpawnConfettiBurst(Transform parent)
+	{
+		GameObject g = Instantiate(_confettiBurst,parent);
+		this.transform.localPosition = new Vector3(parent.position.x, parent.position.y, 0);
+
+	}
 
 	private void Update()
 	{
+		if (_lastStair == null)
+			return;
+
 		if (_lastStair.transform.position.y - PlayerController.instance.transform.position.y < 8)
 			SpawnStairs(_lastStair, _stairNum);
 	}
+    IEnumerator WaitSpawn()
+    {
+        _canSpawnEnemy = false;
+        yield return new WaitForSeconds(0.5f);
+        _canSpawnEnemy = true;
+    }
 }

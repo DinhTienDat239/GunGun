@@ -11,7 +11,7 @@ public class BurstParticles : MonoBehaviour
 		_particleSystem = GetComponent<ParticleSystem>();
 	}
 
-	public void Init(Vector3 pos)
+	public GameObject Init(Vector3 pos)
 	{
 		if (_particleSystem != null)
 		{
@@ -20,9 +20,10 @@ public class BurstParticles : MonoBehaviour
 			_particleSystem.Play();
 			StartCoroutine(StopParticleSystem(3f));
 		}
+		return this.gameObject;
 	}
 
-	private IEnumerator StopParticleSystem(float time)
+    private IEnumerator StopParticleSystem(float time)
 	{
 		yield return new WaitForSeconds(time);
 

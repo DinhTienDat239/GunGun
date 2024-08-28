@@ -6,18 +6,25 @@ public class SkinItem : MonoBehaviour
 	[SerializeField] SkinData _skinData;
 	[SerializeField] GameObject _lock;
     [SerializeField] Image _itemIcon;
+	[SerializeField] Text _itemNameTxt;
+	[SerializeField] Text _itemPriceTxt;
 
-    void Start()
+
+	void Start()
 	{
 		_itemIcon.sprite = _skinData.GetSpriteSkin();
+		_itemNameTxt.text = _skinData.GetName();
+		
 		if (GameManager.instance.idSkin.Contains(" " + _skinData.GetSkinID() + " "))
 		{
 			_skinData.SetUnlocked(true);
-		}
+            _itemPriceTxt.text = "Owned";
+        }
 		else
 		{
 			_skinData.SetUnlocked(false);
-		}
+            _itemPriceTxt.text = "Price: " + _skinData.GetPrice().ToString();
+        }
 		UpdateLock();       
     }
 

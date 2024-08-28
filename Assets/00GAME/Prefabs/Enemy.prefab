@@ -193,7 +193,7 @@ Transform:
   m_GameObject: {fileID: 3434628725517023096}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: -0.29999995}
+  m_LocalPosition: {x: 0, y: 0.6, z: -0.29999995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -296,7 +296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2196157631006904457}
   - component: {fileID: 655007261110085174}
-  - component: {fileID: 7216971433086131282}
+  - component: {fileID: 6064084408574003388}
   m_Layer: 0
   m_Name: Body
   m_TagString: EnemyBody
@@ -371,7 +371,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &7216971433086131282
+--- !u!60 &6064084408574003388
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -504,7 +504,7 @@ MonoBehaviour:
   _gun: {fileID: 1750185370712662124}
   bodyOB: {fileID: 6242356825370649949}
   _headCol: {fileID: 1140294098902379874}
-  _bodyCol: {fileID: 7216971433086131282}
+  _bodyCol: {fileID: 6064084408574003388}
   _gunDatas:
   - {fileID: 11400000, guid: 335c921d9d705df4299fc74cfc7aa37c, type: 2}
   - {fileID: 11400000, guid: 4ec9fff4635cc9e499fae0bf95466f5e, type: 2}
@@ -534,4 +534,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

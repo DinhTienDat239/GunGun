@@ -7,12 +7,13 @@ public class UIMenu : MonoBehaviour
 {
     [SerializeField] Text _scoreBestTxt;
 	[SerializeField] Text _moneyTxt;
+
 	/*int _scoreBest = 0;*/
 
     // Start is called before the first frame update
     void Start()
     {
-        Observer.instance.AddListener(CONSTANTS.UIMENU,UpdateBestScore);
+        Observer.instance.AddListener(CONSTANTS.UIMENU, UpdateBestScore);
 		Observer.instance.AddListener(CONSTANTS.UIMENU, UpdateMoney);
 	}
 
@@ -21,6 +22,7 @@ public class UIMenu : MonoBehaviour
     {
         Observer.instance.Notify(CONSTANTS.UIMENU, null);
 		Observer.instance.Notify(CONSTANTS.UIMENU, null);
+
 	}
 
     void UpdateBestScore(object obj)

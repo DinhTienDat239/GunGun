@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: GunData_1_Pistol
   m_EditorClassIdentifier: 
   _gunID: G1
+  _gunName: PISTOL
   _spriteGun: {fileID: 33290537, guid: a541d9ec2405ad348aca9943dbc36baa, type: 3}
-  _posOriginAim: {x: 0.423, y: 0.002}
-  _radiusRotate: 1
+  _radiusRotate: 0.5
   _numBullet: 1
   _speedBullet: 15
   _bullet: {fileID: 1542424707838665370, guid: 1487f9081ff03e6499d5f40437b139e6, type: 3}
@@ -23,3 +23,4 @@ MonoBehaviour:
   _price: 0
   _shotSound: {fileID: 8300000, guid: d20cd3cbe20fb804a91495b91f4f8e77, type: 3}
   _styleFire: Fire1BulletBasic
+  _shakeGun: 2

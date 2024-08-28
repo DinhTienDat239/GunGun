@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RunEnemyController : EnemyController
@@ -24,9 +22,6 @@ public class RunEnemyController : EnemyController
         _currentPatrolDistance = 0;
         _dirMove = -dir;
         UpdateSpeed();
-        //khoa truc z
-        if (_rb != null)
-            _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     void UpdateSpeed()
@@ -76,8 +71,6 @@ public class RunEnemyController : EnemyController
 
     public override void Death(int hit)
     {
-        //mo khoa truc z
-        _rb.constraints = RigidbodyConstraints2D.None;
         base.Death(hit);
     }
 
@@ -96,7 +89,7 @@ public class RunEnemyController : EnemyController
         }
 
         //di chuyen
-        _rb.velocity = new Vector2(_speed * _dirMove, _rb.velocity.y);
+        this.transform.Translate(Vector2.right * _speed * _dirMove * Time.deltaTime);
 
     }
 }

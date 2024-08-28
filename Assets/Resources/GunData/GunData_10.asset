@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b646d31185109b647847b822066c4967, type: 3}
+  m_Name: GunData_10
+  m_EditorClassIdentifier: 
+  _gunID: G10
+  _gunName: SHOTGUN
+  _spriteGun: {fileID: 1927973543, guid: e9366aadac9e58845ae4005cb31d0b72, type: 3}
+  _radiusRotate: 0.5
+  _numBullet: 3
+  _speedBullet: 16
+  _bullet: {fileID: 1542424707838665370, guid: 1487f9081ff03e6499d5f40437b139e6, type: 3}
+  _unlocked: 1
+  _price: 3000
+  _shotSound: {fileID: 8300000, guid: 07a1809fed31fd84191b1b9349b24172, type: 3}
+  _styleFire: FireShotGunBasic
+  _shakeGun: 5

@@ -18,7 +18,6 @@ public class GunController : MonoBehaviour
 		Init();
 	}
 
-	// Update is called once per frame
 	void Update()
 	{
 		//tra lai sprite gun
@@ -131,6 +130,7 @@ public class GunController : MonoBehaviour
 	void Fire1BulletBasic()
 	{
         AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
+		CamController.instance.ShakeCamera(_gunData.GetShakeGun());
         SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, PlayerController.instance._aimPos - (Vector2)this.transform.position, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
 	}
 
@@ -150,9 +150,10 @@ public class GunController : MonoBehaviour
 				float offsetAngle = Random.Range(-10f, 10f);
 				dir = Quaternion.Euler(0, 0, offsetAngle) * dir;
 			}
-			SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, dir, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
             AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
-            yield return new WaitForSeconds(0.05f);
+			CamController.instance.ShakeCamera(_gunData.GetShakeGun());
+			SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, dir, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
+			yield return new WaitForSeconds(0.05f);
 		}
 	}
 
@@ -165,9 +166,8 @@ public class GunController : MonoBehaviour
 				float offsetAngle = Random.Range(-10f, 10f);
 				dir = Quaternion.Euler(0, 0, offsetAngle) * dir;
 			}
-
-			SpawnController.instance.SpawnBulletEnemy(_gunData.GetNumID(), this.transform.position, dir, facing, _gunData.GetSpeedBullet());
             AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
+			SpawnController.instance.SpawnBulletEnemy(_gunData.GetNumID(), this.transform.position, dir, facing, _gunData.GetSpeedBullet());
             yield return new WaitForSeconds(0.05f);
 		}
 	}
@@ -188,7 +188,8 @@ public class GunController : MonoBehaviour
 				dir = Quaternion.Euler(0, 0, offsetAngle) * dir;
 			}
             AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
-            SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, dir, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
+			CamController.instance.ShakeCamera(_gunData.GetShakeGun());
+			SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, dir, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
 		}
 	}
 
@@ -215,9 +216,10 @@ public class GunController : MonoBehaviour
 	void Fire1BulletRotate()
 	{
 		this.GetComponent<Renderer>().enabled = false;
-		SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, PlayerController.instance._aimPos - (Vector2)this.transform.position, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
         AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
-    }
+		CamController.instance.ShakeCamera(_gunData.GetShakeGun());
+		SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, PlayerController.instance._aimPos - (Vector2)this.transform.position, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
+	}
 
 	void Fire1BulletRotate(Vector2 dir, int facing)
 	{
@@ -235,9 +237,10 @@ public class GunController : MonoBehaviour
 				float offsetAngle = Random.Range(-10f, 10f);
 				dir = Quaternion.Euler(0, 0, offsetAngle) * dir;
 			}
-			SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, dir, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
             AudioManager.instance.PlaySound(_gunData.GetShotSound(), 0, false);
-            yield return new WaitForSeconds(0.05f);
+			CamController.instance.ShakeCamera(_gunData.GetShakeGun());
+			SpawnController.instance.SpawnBulletPlayer(_gunData.GetNumID(), this.transform.position, dir, PlayerController.instance.facingDir, _gunData.GetSpeedBullet());
+			yield return new WaitForSeconds(0.05f);
 		}
 	}
 

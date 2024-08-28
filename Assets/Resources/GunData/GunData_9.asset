@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: GunData_9
   m_EditorClassIdentifier: 
   _gunID: G9
+  _gunName: LASER GUN
   _spriteGun: {fileID: -1782549958, guid: 6ed8f0055a06ba14cbb8b4e17e89491d, type: 3}
-  _posOriginAim: {x: 0.71, y: 0.001}
-  _radiusRotate: 0.8
+  _radiusRotate: 0.6
   _numBullet: 1
-  _speedBullet: 18
-  _bullet: {fileID: 1542424707838665370, guid: 1487f9081ff03e6499d5f40437b139e6, type: 3}
-  _unlocked: 0
-  _price: 0
-  _shotSound: {fileID: 0}
+  _speedBullet: 20
+  _bullet: {fileID: 2449710727467381102, guid: d1625999e90576e4d977a3cf3780a46c, type: 3}
+  _unlocked: 1
+  _price: 3000
+  _shotSound: {fileID: 8300000, guid: 1dcf0e8b9d768174c8535727825b3934, type: 3}
   _styleFire: Fire1BulletBasic
+  _shakeGun: 3

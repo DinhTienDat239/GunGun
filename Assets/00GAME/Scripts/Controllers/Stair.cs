@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Stair : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class Stair : MonoBehaviour
     [SerializeField] bool changedColor = false;
 
     [SerializeField] public List<SpriteRenderer> _stairs;
+    [SerializeField] public List<Sprite> _decorations;
     [SerializeField] public SpriteRenderer _bg;
+    [SerializeField] public SpriteRenderer _decorObj;
 
     void Start()
     {
@@ -60,6 +63,15 @@ public class Stair : MonoBehaviour
 
     public void Init(Stair belowStair)
     {
+        if(Random.Range(0,5) == 0)
+        {
+            _decorObj.sprite = null;
+        }
+        else
+        {
+            _decorObj.sprite = _decorations[Random.Range(0,_decorations.Count)];
+            _decorObj.color = belowStair._bg.color;
+        }
         hasChangedColor = false;
         Color defColor = belowStair._bg.color;
         Color bgColor = new Color(defColor.r - 20f / 255f, defColor.g - 20f / 255f, defColor.b - 20f / 255f);
@@ -68,6 +80,7 @@ public class Stair : MonoBehaviour
 
     public void Init()
     {
+        _decorObj.sprite = null;
         hasChangedColor = false;
         Color defColor = GameManager.instance._stairColor;
         Color bgColor = new Color(defColor.r - 20f / 255f, defColor.g - 20f / 255f, defColor.b - 20f / 255f);
@@ -113,6 +126,7 @@ public class Stair : MonoBehaviour
         _bg.color = bgColor;
 
         _stairColor = stairColor;
+        _decorObj.color = stairColor;
         _bgColor = bgColor;
     }
 }

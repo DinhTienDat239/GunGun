@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: GunData_5_PiratePistol
   m_EditorClassIdentifier: 
   _gunID: G5
+  _gunName: PIRATE PISTOL
   _spriteGun: {fileID: 394991653, guid: cda1316b1f6b31e458d01527df0120b4, type: 3}
-  _posOriginAim: {x: 0.817, y: 0.033}
-  _radiusRotate: 0.6
-  _numBullet: 3
-  _speedBullet: 18
+  _radiusRotate: 0.5
+  _numBullet: 1
+  _speedBullet: 16
   _bullet: {fileID: 1542424707838665370, guid: 1487f9081ff03e6499d5f40437b139e6, type: 3}
   _unlocked: 0
-  _price: 0
+  _price: 2000
   _shotSound: {fileID: 8300000, guid: f1e32f7d8601f1e4db3bceaa60a98fb3, type: 3}
-  _styleFire: FireShotGunBasic
+  _styleFire: Fire1BulletBasic
+  _shakeGun: 5

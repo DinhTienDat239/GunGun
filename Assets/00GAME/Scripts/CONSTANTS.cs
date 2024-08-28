@@ -16,6 +16,12 @@ public static class CONSTANTS
     public static string IDGUNLAST = "IDGunLast";
     public static string SOUND_MUSIC = "SoundMusic";
     public static string SOUND_SFX = "SoundSFX";
+    public static string CLAIMED_FB = "Fb";
+    public static string CLAIMED_IG = "Ig";
+    public static string DAILY_VID = "Daily";
+    public static string DAILY_Y = "DailyY";
+    public static string DAILY_M = "DailyM";
+    public static string DAILY_D = "DailyD";
 
     //Scenes
     public static string SCENE_MAIN = "Main";
@@ -37,9 +43,12 @@ public static class CONSTANTS
     public static string UIOVER_UPDATEBESTSCORE = "UIOVER_UBS";
     public static string UIMENU = "UIMENU";
     public static string UISPIN = "UISPIN";
-	public static string UISPIN_UPDATECOIN = "UISPIN_UC";
+    public static string UISPIN_RBWI = "UISPIN_RBWI";
+    public static string UISPIN_UPDATECOIN = "UISPIN_UC";
 	public static string UISPIN_NOMONEY = "UISPIN_NM";
-    public static string UISTORE_NOTI = "UISTORE_NOTI";
+	public static string UISPIN_RBWGI = "UISPIN_RBWGI";
+	public static string UISPIN_RBWSI = "UISPIN_RBWSI";
+	public static string UISTORE_NOTI = "UISTORE_NOTI";
     public static string UISTORE_UPDATECOIN = "UISTORE_UC";
     public static string UISTORE_PLAYER = "UISTORE_UP";
 

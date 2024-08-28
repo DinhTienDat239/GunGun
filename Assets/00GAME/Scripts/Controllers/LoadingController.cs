@@ -15,7 +15,6 @@ public class LoadingController : MonoBehaviour
         StartCoroutine(LoadingScreen());
     }
 
-    // Update is called once per frame
     void Update()
     {
         

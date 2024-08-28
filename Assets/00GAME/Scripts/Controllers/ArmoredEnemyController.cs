@@ -6,6 +6,7 @@ public class ArmoredEnemyController : EnemyController
 {
     [SerializeField] GameObject _armor;
     bool _hasArmor;
+    [SerializeField] float _armorY;
 
     public override void Start()
     {
@@ -21,9 +22,8 @@ public class ArmoredEnemyController : EnemyController
         _armor.SetActive(true);
         Rigidbody2D armorRb = _armor.GetComponent<Rigidbody2D>();
         armorRb.gravityScale = 0;
-        _armor.transform.localPosition = new Vector3(0, -0.235f, 0);
+        _armor.transform.localPosition = new Vector3(0, _armorY, 0);
         _armor.transform.rotation = new Quaternion(0, 0, 0, 0);
-
     }
 
     public override void Update()
@@ -37,10 +37,9 @@ public class ArmoredEnemyController : EnemyController
 
         if (_hasArmor)
         {
-            _armor.transform.localPosition = new Vector3(0, -0.235f, 0);
-            _armor.transform.rotation = new Quaternion(0, 0, 0, 0);
+            _armor.transform.localPosition = new Vector3(0, _armorY, 0);
         }
-	}
+    }
 
     public override void TakeDamage(int hit)
     {
@@ -58,6 +57,7 @@ public class ArmoredEnemyController : EnemyController
             armorRb.AddForce(Vector2.up * 200f);
             armorRb.AddTorque(100f);
             PlayerController.instance.shooted = false;
+            AudioManager.instance.PlaySound(AudioManager.instance.UIClips[10], 0, false);
         }
         else
         {

@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: GunData_4_Sniper
   m_EditorClassIdentifier: 
   _gunID: G4
+  _gunName: SNIPER
   _spriteGun: {fileID: -1628634007, guid: 8f63b9bc9e84e44408b24e11e75df5f2, type: 3}
-  _posOriginAim: {x: 1.252, y: 0.01}
-  _radiusRotate: 3
+  _radiusRotate: 1.2
   _numBullet: 1
   _speedBullet: 22
   _bullet: {fileID: 1542424707838665370, guid: 1487f9081ff03e6499d5f40437b139e6, type: 3}
   _unlocked: 1
-  _price: 200
+  _price: 4000
   _shotSound: {fileID: 8300000, guid: 713cbf4c7877f4247b3e7b786c729d1b, type: 3}
   _styleFire: Fire1BulletBasic
+  _shakeGun: 8

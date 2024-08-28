@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: GunData_2
   m_EditorClassIdentifier: 
   _gunID: G2
+  _gunName: MAGIC WAND
   _spriteGun: {fileID: -1990320802, guid: 77f990652d422c14e88a4348f0c80ecf, type: 3}
-  _posOriginAim: {x: 0.536, y: 0.002}
-  _radiusRotate: 2
+  _radiusRotate: 0.5
   _numBullet: 1
-  _speedBullet: 15
-  _bullet: {fileID: 1542424707838665370, guid: d0f48078a39bce745901e28eead9f138, type: 3}
-  _unlocked: 0
-  _price: 0
-  _shotSound: {fileID: 0}
+  _speedBullet: 8
+  _bullet: {fileID: 2449710727467381102, guid: 0c93ec27aa1da544785ab18cf18ed2c6, type: 3}
+  _unlocked: 1
+  _price: 2000
+  _shotSound: {fileID: 8300000, guid: f5b4da09052fc72419024a89685baac5, type: 3}
   _styleFire: Fire1BulletBasic
+  _shakeGun: 1

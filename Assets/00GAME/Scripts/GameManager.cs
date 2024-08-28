@@ -1,5 +1,9 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -7,22 +11,25 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public int score;
     [SerializeField] public int scoreBest;
     [SerializeField] public int money;
-	[SerializeField] public string idSkin;
-	[SerializeField] public string idGun;
+    [SerializeField] public string idSkin;
+    [SerializeField] public string idGun;
 
     [SerializeField] public string idSkinLast;
     [SerializeField] public string idGunLast;
 
-	[SerializeField] public int combo;
+    [SerializeField] public int combo;
     [SerializeField] public float time;
     [SerializeField] public float timeAim;
 
     [SerializeField] public float enemyDie;
     bool _timeActive;
 
-    [SerializeField] public GAME_STATE? gameState = null;
+    public GAME_STATE? gameState = null;
+    public bool checkLoadRePlay;
+    //
+	public bool isFirstTimeOver;
 
-    public enum GAME_STATE
+	public enum GAME_STATE
     {
         MENU = 0,
         SETTING = 1,
@@ -35,17 +42,28 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        //Kh?i t?o các bi?n
-        //State ban ??u
         AudioManager.instance.PlaySound(AudioManager.instance.BGMusicClip, 0, true);
 
+        idSkin = PlayerPrefs.GetString(CONSTANTS.IDSKIN, " S1 ");
+        idGun = PlayerPrefs.GetString(CONSTANTS.IDGUN, " G1 ");
         idSkinLast = PlayerPrefs.GetString(CONSTANTS.IDSKINLAST);
         idGunLast = PlayerPrefs.GetString(CONSTANTS.IDGUNLAST);
 
-        SkinData[] skins = Resources.LoadAll("SkinData", typeof(SkinData)).Cast<SkinData>().ToArray();
-        foreach(SkinData s in skins)
+        DateTime dtSaved = new DateTime(PlayerPrefs.GetInt(CONSTANTS.DAILY_Y, 1), PlayerPrefs.GetInt(CONSTANTS.DAILY_M, 1), PlayerPrefs.GetInt(CONSTANTS.DAILY_D, 1));
+        if (DateTime.Now.Date != dtSaved)
         {
-            if(s.GetSkinID() == idSkinLast)
+            Debug.LogError("khac ngay");
+            PlayerPrefs.SetInt(CONSTANTS.DAILY_Y, DateTime.Now.Year);
+            PlayerPrefs.SetInt(CONSTANTS.DAILY_M, DateTime.Now.Month);
+            PlayerPrefs.SetInt(CONSTANTS.DAILY_D, DateTime.Now.Day);
+            PlayerPrefs.SetInt(CONSTANTS.DAILY_VID, 1);
+        }
+
+
+        SkinData[] skins = Resources.LoadAll("SkinData", typeof(SkinData)).Cast<SkinData>().ToArray();
+        foreach (SkinData s in skins)
+        {
+            if (s.GetSkinID() == idSkinLast)
             {
                 PlayerController.instance.SetSkin(s);
             }
@@ -55,12 +73,12 @@ public class GameManager : Singleton<GameManager>
         {
             if (g.GetGunID() == idGunLast)
             {
-                PlayerController.instance.GetComponentInChildren<GunController>().SetGunData(g);				
-			}
+                PlayerController.instance.GetComponentInChildren<GunController>().SetGunData(g);
+            }
         }
 
-		ChangeState(GAME_STATE.MENU);
-	}
+        ChangeState(GAME_STATE.MENU);
+    }
 
     // Update is called once per frame
     void Update()
@@ -123,8 +141,7 @@ public class GameManager : Singleton<GameManager>
 
         scoreBest = PlayerPrefs.GetInt(CONSTANTS.BESTSCORE, 0);
         money = PlayerPrefs.GetInt(CONSTANTS.MONEY, 0);
-		idSkin = PlayerPrefs.GetString(CONSTANTS.IDSKIN, " S1 ");
-		idGun = PlayerPrefs.GetString(CONSTANTS.IDGUN, " G1 ");
+
 
         score = 0;
         combo = 1;
@@ -133,7 +150,9 @@ public class GameManager : Singleton<GameManager>
         time = timeAim;
         _timeActive = true;
         enemyDie = 0;
-    }
+        checkLoadRePlay = true;
+        isFirstTimeOver = true;
+	}
 
     public void ChangeState(GAME_STATE gameState)
     {
@@ -147,21 +166,31 @@ public class GameManager : Singleton<GameManager>
             if (this.gameState != GAME_STATE.SETTING)
                 SpawnController.instance.Init();
             PlayerController.instance.Init();
+
+            AdManager.instance.ShowBanner();
+            AdManager.instance.ShowInter();
         }
         if (gameState == GAME_STATE.PLAY)
         {
             UIManager.instance.ChangeUI(CONSTANTS.SCENE_PLAY);
-            this.Init();
-            if (this.gameState != GAME_STATE.MENU)
-                SpawnController.instance.Init();
-            PlayerController.instance.Init();
+			if (checkLoadRePlay)
+			{
+				this.Init();
+				if (this.gameState != GAME_STATE.MENU)
+					SpawnController.instance.Init();
+				PlayerController.instance.Init();
+			}
         }
         if (gameState == GAME_STATE.OVER)
         {
             UIManager.instance.ChangeUI(CONSTANTS.SCENE_OVER);
             CheckScoreBest();
             SaveMoney();
-        }
+			if (isFirstTimeOver)
+			{
+                StartCoroutine(SetFirstTimeOverFalseAfterDelay(0.5f));
+			}
+		}
         if (gameState == GAME_STATE.SETTING)
         {
             UIManager.instance.ChangeUI(CONSTANTS.SCENE_SETTING);
@@ -178,7 +207,13 @@ public class GameManager : Singleton<GameManager>
         this.gameState = gameState;
     }
 
-    public void CheckScoreBest()
+	IEnumerator SetFirstTimeOverFalseAfterDelay(float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		isFirstTimeOver = false;
+	}
+
+	public void CheckScoreBest()
     {
         if (score > scoreBest)
         {
@@ -215,20 +250,20 @@ public class GameManager : Singleton<GameManager>
     public void UnlockSkin(string id)
     {
         idSkin += " " + id + " ";
-	}
+    }
 
-	public void SaveIdSkin()
-	{
-		PlayerPrefs.SetString(CONSTANTS.IDSKIN, idSkin);
-	}
+    public void SaveIdSkin()
+    {
+        PlayerPrefs.SetString(CONSTANTS.IDSKIN, idSkin);
+    }
 
-	public void UnlockGun(string id)
-	{
-		idGun += " " + id + " ";
-	}
+    public void UnlockGun(string id)
+    {
+        idGun += " " + id + " ";
+    }
 
-	public void SaveIdGun()
-	{
-		PlayerPrefs.SetString(CONSTANTS.IDGUN, idGun);
-	}
+    public void SaveIdGun()
+    {
+        PlayerPrefs.SetString(CONSTANTS.IDGUN, idGun);
+    }
 }

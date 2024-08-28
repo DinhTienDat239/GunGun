@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: GunData_8
   m_EditorClassIdentifier: 
   _gunID: G8
+  _gunName: FISH
   _spriteGun: {fileID: -430426632, guid: 77eb985fc3ab81742aedbe01c30bc238, type: 3}
-  _posOriginAim: {x: 0, y: 0}
   _radiusRotate: 0.6
   _numBullet: 1
   _speedBullet: 10
   _bullet: {fileID: 1998263318786512174, guid: 550d60513f7307d43a47ee02045944cf, type: 3}
-  _unlocked: 0
-  _price: 0
-  _shotSound: {fileID: 0}
-  _styleFire: Fire1BulletBasic
+  _unlocked: 1
+  _price: 2000
+  _shotSound: {fileID: 8300000, guid: 0dc0d7b9fac17c94481291ee3e07650f, type: 3}
+  _styleFire: Fire1BulletRotate
+  _shakeGun: 1

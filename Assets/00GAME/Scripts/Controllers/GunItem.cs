@@ -6,18 +6,24 @@ public class GunItem : MonoBehaviour
 	[SerializeField] GunData _gunData;
     [SerializeField] GameObject _lock;
     [SerializeField] Image _itemIcon;
+    [SerializeField] Text _itemNameTxt;
+    [SerializeField] Text _itemPriceTxt;
 
     void Start()
 	{
 		_itemIcon.sprite = _gunData.GetSpriteGun();
+        _itemIcon.SetNativeSize();
+		_itemNameTxt.text = _gunData.GetName();
 		if (GameManager.instance.idGun.Contains(" " + _gunData.GetGunID() + " "))
 		{
 			_gunData.SetUnlocked(true);
-		}
+            _itemPriceTxt.text = "Owned";
+        }
 		else
 		{
 			_gunData.SetUnlocked(false);
-		}
+            _itemPriceTxt.text = "Price: " + _gunData.GetPrice().ToString();
+        }
 		UpdateLock();    
 	}
 
